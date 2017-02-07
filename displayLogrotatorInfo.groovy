@@ -17,7 +17,8 @@ jenkins.model.Jenkins.instance.getAllItems(hudson.model.Job).each {
     if (it.logRotator.daysToKeep<0 || it.logRotator.daysToKeep> daysToKeep){
       	counter++
         //potentially you can add a new logrotator here
-  		println ""+it.fullDisplayName + " -> "+ it.logRotator.daysToKeep
+        //job.logRotator = new hudson.tasks.LogRotator ( 30, 40, 30, 10) // days to keep, num to keep, artifact days to keep, num to keep
+  		  println ""+it.fullDisplayName + " -> "+ it.logRotator.daysToKeep
     }
   }
 } 
