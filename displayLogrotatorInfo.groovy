@@ -18,10 +18,19 @@ jenkins.model.Jenkins.instance.getAllItems(hudson.model.Job).each {
       	(it.logRotator.daysToKeep<0 || it.logRotator.daysToKeep> daysToKeep) &&
       	(it.logRotator.artifactDaysToKeep < 0 ||it.logRotator.artifactDaysToKeep < aDaysToKeep )
        ){
-      	println ""+it.fullDisplayName + " DaysToKeep ->  "+ it.logRotator.daysToKeep + " #builds " + it.builds.size()
+      	println ""+it.fullDisplayName + " \n\tDaysToKeep ->  "+ it.logRotator.daysToKeep + " \n\t#Builds " + it.builds.size()
       	counter++
-//        it.logRotator = new hudson.tasks.LogRotator ( 14, -1, 14, -1) // days to keep, num to keep, artifact days to keep, num to keep
+          if (!it instanceof hudson.matrix.MatrixBuild ){
+        	it.logRotator = new hudson.tasks.LogRotator ( 14, -1, 14, -1) // days to keep, num to keep, artifact days to keep, num to keep
+          }
     }
   }
 } 
+
+//Rotates the newly configured log settings
+Jenkins.instance.getAllItems(Job.class)
+.findAll { it.logRotator }
+    .each {
+      it.logRotator.perform(it)
+    }
 println "number of misconfigured jobs: " +counter
