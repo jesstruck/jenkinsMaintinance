@@ -1,5 +1,8 @@
-import net.bull.javamelody.*;
+/**
+Print's information about the Jenkins installation, mainly properties fron the main java process.
+*/
 
+import net.bull.javamelody.*;
 java = new JavaInformations(Parameters.getServletContext(), true);
 println "\nsessions count:                 " + java.sessionCount;
 println "\nactive HTTP threads count:      " + java.activeThreadCount;
