@@ -1,28 +1,41 @@
+/**
+This Script loops trough all your Jenkins jobs, and updates java version and Grovvy version to be used in the job, and then prints all the jobs that is being updated 
+including what they  have been updated from and to
+
+* if the job name matches ${subName} the job gets updates
+* if the job is already using java, if not the job is skipped
+
+Parameters:
+_________________
+* newGroovy  -> The version of Groovy to update to
+* subName  -> The sub part of the names of all the jobs of update 
+*/
+
 import hudson.plugins.emailext.*
 import hudson.model.*
 import hudson.maven.*
 import hudson.maven.reporters.*
 import hudson.tasks.*
+
 newJDK = Hudson.getInstance().getJDK("jdk7u51"); 
 newGroovy = "groovy 2.2.1"  
+subName = ""
 def updated = 0
 def counter = 0
 jobs = Hudson.instance.items
 for (item in jobs){
-	if(item.name.contains('OATS')){
+	if(item.name.contains(subName)){
 	    counter++
-    	//if (item.JDK == null){
+	    if (item.JDK == null){
        		for(builder in item.buildersList){
     			if(builder instanceof hudson.plugins.groovy.Groovy) {
                   	printf("%-55s | %4s -> %-8s | %-12s -> %-8s |\n", item.name, item.JDK ,newJDK, builder.groovyName, newGroovy)
                   	item.JDK = newJDK
               		builder.groovyName = newGroovy
-    				updated++  	              
+    			updated++  	              
             	}
-        	}
-      	//}
-  	}
+	    }
+      	}
 }
-
 println("Total job: "+counter)
 println("Misconfigured jobs" + updated)
