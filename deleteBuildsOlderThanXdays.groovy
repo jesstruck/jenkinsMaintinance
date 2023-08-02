@@ -8,8 +8,8 @@ def cleanJob(hudson.model.AbstractItem item){
   switch (item) {
     case org.jenkinsci.plugins.workflow.job.WorkflowJob:
       item.getSCMs().each { scm ->
-        println("Currently looking at Workflow job: " + job.name)
-        cleanJob(job)
+        println("Currently looking at Workflow job: " + scm.name)
+        cleanJob(scm)
       }
       break
     case com.cloudbees.hudson.plugins.folder.Folder:
