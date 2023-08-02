@@ -9,7 +9,7 @@ def cleanJob(hudson.model.AbstractItem item){
     case org.jenkinsci.plugins.workflow.job.WorkflowJob:
     case com.cloudbees.hudson.plugins.folder.Folder:
       item.getAllJobs().each { job ->
-        println("Currently looking at Folder job: " + job.name)
+        println("Currently looking at job: " + job.name)
         cleanJob(job)
       }
       break
