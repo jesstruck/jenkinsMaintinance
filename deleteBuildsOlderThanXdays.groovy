@@ -7,11 +7,6 @@ safe_date = new Date().plus(-90)
 def cleanJob(hudson.model.AbstractItem item){
   switch (item) {
     case org.jenkinsci.plugins.workflow.job.WorkflowJob:
-      item.getSCMs().each { scm ->
-        println("Currently looking at Workflow job: " + scm.name)
-        cleanJob(scm)
-      }
-      break
     case com.cloudbees.hudson.plugins.folder.Folder:
       item.getAllJobs().each { job ->
         println("Currently looking at Folder job: " + job.name)
