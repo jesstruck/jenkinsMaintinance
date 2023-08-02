@@ -32,7 +32,7 @@ def cleanJob(hudson.model.AbstractItem item){
   }
 }
 
-LIMIT = 20
+LIMIT = 20 //Limits the number of jobs to clean
 Jenkins.instance.items.each { item ->
   println item.name
   if (LIMIT > 1) {
